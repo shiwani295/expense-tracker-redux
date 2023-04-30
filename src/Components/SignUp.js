@@ -3,6 +3,7 @@ import "../Asset/CSS/signUp.css";
 import { useDispatch } from "react-redux";
 import { authAction } from "../Store";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -97,7 +98,6 @@ const SignUp = () => {
                       required
                     />
                   </div>
-
                   {!isLogin && (
                     <div className="form-group">
                       <label for="Confirm_Password">Confirm Password</label>
@@ -111,7 +111,6 @@ const SignUp = () => {
                       />
                     </div>
                   )}
-
                   <div className="text-center">
                     <button
                       type="button "
@@ -120,6 +119,12 @@ const SignUp = () => {
                       {isLogin ? "Login" : "SignUp"}
                     </button>
                   </div>
+                  {isLogin && (
+                    <div className="text-center">
+                      <Link to="/Forgot-password">Forgot Password ?</Link>
+                    </div>
+                  )}
+
                   <div className="text-center ">
                     <div
                       type="button "
