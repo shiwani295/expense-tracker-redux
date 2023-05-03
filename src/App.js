@@ -8,13 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { authAction } from "./Store";
 import MyProfile from "./Components/Pages/MyProfile";
 import Forgotpassword from "./Components/Pages/Forgotpassword";
+import Welcome from "./Components/Pages/Welcome";
 // import { useEffect } from "react";
 
 function App() {
   const isauth = useSelector((state) => state.isAuthentication);
-  console.log(isauth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const token = localStorage.getItem("token");
   // useEffect(() => {
   //   if (token) {
@@ -29,10 +29,10 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={isauth ? <Navigate to="/home" /> : <SignUp />}
+          element={isauth ? <Navigate to="/Welcome" /> : <SignUp />}
         />
         SignUp
-        <Route path="/home" element={<Home />} />
+        <Route path="/Welcome" element={<Welcome />} />
         <Route path="/login" element={<SignUp />} />
         <Route path="/MyProfile" element={<MyProfile />} />
         <Route path="/products" element={<Products />} />
