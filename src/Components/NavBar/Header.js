@@ -1,11 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "../NavBar/Header.css";
 
 const Header = () => {
   const isauth = useSelector((state) => state.isAuthenticated);
+  const authEmail = localStorage.getItem("email");
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white navbar_header">
       <Link
         className="navbar-brand"
         to="/"
@@ -51,6 +53,40 @@ const Header = () => {
             )}
           </li>
         </ul>
+      </div>
+
+      <div className="dropdown ">
+        <span
+          className="btn  dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          style={{ color: "rgb(30, 150, 247)" }}
+        >
+          <i className="fa fa-user" aria-hidden="true"></i>
+        </span>
+        <div
+          className="dropdown-menu animate__bounceIn"
+          aria-labelledby="dropdownMenuButton"
+          style={{ marginLeft: "-139px" }}
+        >
+          <div className="dropdown-item">
+            <h6>Welcome</h6>
+            <p>{authEmail}</p>
+          </div>
+
+          <Link className="dropdown-item" to="#">
+            Logout
+          </Link>
+          <Link className="dropdown-item" to="#">
+            Another action
+          </Link>
+          <Link className="dropdown-item" to="#">
+            Something else here
+          </Link>
+        </div>
       </div>
     </nav>
   );

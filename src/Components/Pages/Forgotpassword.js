@@ -14,7 +14,7 @@ const Forgotpassword = () => {
     const newPassword = InputPasswordRef.current.value;
     console.log(newPassword);
 
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDSWFv8wPRt3w95-Ssm_qAutPb3_WeS1IU`;
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCrcYRZkoGff_xTDV5VTk2q4SfWwRFNVB8`;
 
     const data = {
       idToken: token,

@@ -29,10 +29,10 @@ const SignUp = () => {
       let url;
       if (isLogin) {
         url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSWFv8wPRt3w95-Ssm_qAutPb3_WeS1IU";
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCrcYRZkoGff_xTDV5VTk2q4SfWwRFNVB8";
       } else {
         url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSWFv8wPRt3w95-Ssm_qAutPb3_WeS1IU";
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCrcYRZkoGff_xTDV5VTk2q4SfWwRFNVB8";
       }
       fetch(url, {
         method: "POST",
