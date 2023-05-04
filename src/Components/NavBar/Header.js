@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "../NavBar/Header.css";
+import { authAction } from "../../Store/index";
 
 const Header = () => {
   const isauth = useSelector((state) => state.isAuthenticated);
   const authEmail = localStorage.getItem("email");
   const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token === null) {
-      navigate("/login");
-    }
-  }, []);
+  async function handleLogout() {
+    await dispatch(authAction.logout());
+    navigate("/login");
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white navbar_header">
@@ -83,12 +84,7 @@ const Header = () => {
             </div>
 
             {isauth && (
-              <Link
-                className="dropdown-item"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                }}
-              >
+              <Link className="dropdown-item" onClick={handleLogout}>
                 Logout
               </Link>
             )}
