@@ -6,6 +6,7 @@ const MyProfile = () => {
   const [name, setName] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const token = localStorage.getItem("token");
+  const [message, setMessage] = useState("");
 
   //get the data
 
@@ -23,7 +24,7 @@ const MyProfile = () => {
     ).then((res) => {
       if (res.ok) {
         return res.json().then((data) => {
-          console.log(data.users[0].displayName);
+          //console.log(data.users[0].displayName);
           setName(() => data.users[0].displayName);
           setImgUrl(() => data.users[0].photoUrl);
         });
@@ -60,6 +61,11 @@ const MyProfile = () => {
         if (res.ok) {
           return res.json().then((data) => {
             console.log(data);
+            setMessage("Update Your Data Sucessfully");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+
             // setImgState(data.photoUrl)
           });
         } else {
@@ -100,6 +106,14 @@ const MyProfile = () => {
       <div className="row">
         <div className="col-md-12 mt-5">
           <h4>Contact Details</h4>
+          <div className=" text-center mt-3 animate__bounceIn">
+            {message && (
+              <span className="reset_password">
+                <i className="fa fa-check mr-2" aria-hidden="true"></i>{" "}
+                {message}
+              </span>
+            )}
+          </div>
           <form
             onSubmit={updateProfileHandler}
             className=" mt-5 border rounded p-3 bg-white "
@@ -137,7 +151,7 @@ const MyProfile = () => {
               />
             </div>
 
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary">Update</button>
           </form>
         </div>
       </div>
