@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "../NavBar/Header.css";
@@ -7,11 +7,8 @@ import { authAction } from "../../Store/index";
 const Header = () => {
   const isauth = useSelector((state) => state.isAuthenticated);
   const authEmail = localStorage.getItem("email");
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   async function handleLogout() {
     await dispatch(authAction.logout());
     navigate("/login");
@@ -48,8 +45,8 @@ const Header = () => {
           )}
           {isauth && (
             <li className="nav-item">
-              <Link className="nav-link" to="/products">
-                Products
+              <Link className="nav-link" to="/my-expense">
+                My Expenses
               </Link>
             </li>
           )}
