@@ -1,25 +1,69 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import "../Pages/MyExpense.css";
+import { useDispatch, useSelector } from "react-redux";
+import { MyExpenseAction } from "../../Store/MyExpenseSlice";
+import TableExpense from "./TableExpense";
 
 const MyExpense = () => {
   const InputDescriptionRef = useRef();
   const InputDateRef = useRef();
   const InputExpenseRef = useRef();
   const InputCategoryRef = useRef();
-  const [expense, setExpense] = useState([]);
+  const dispatch = useDispatch();
+  const expenses = useSelector((state) => state.expense.expense);
+  const totalAmount = useSelector((state) => state.expense.totalAmount);
 
-  const MyExpenseHandler = (event) => {
+  console.log(totalAmount);
+
+  console.log(expenses);
+
+  const MyExpenseSubmitHandler = (event) => {
     event.preventDefault();
     const exprenseData = {
       description: InputDescriptionRef.current.value,
       date: InputDateRef.current.value,
-      amount: InputExpenseRef.current.value,
       category: InputCategoryRef.current.value,
+      amount: InputExpenseRef.current.value,
       id: Math.random().toString(),
     };
-    setExpense((prev) => {
-      return [...prev, exprenseData];
-    });
+    dispatch(MyExpenseAction.addExpense(exprenseData));
+
+    if (
+      !exprenseData.description ||
+      !exprenseData.date ||
+      !exprenseData.category ||
+      !exprenseData.amount
+    ) {
+      window.confirm("please provide each input feild value ");
+    } else {
+      fetch(
+        "https://expensetrackernew-86302-default-rtdb.firebaseio.com/expense.json",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            expense: exprenseData,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          // dispatch(
+          //   MyExpenseAction.addExpense({
+          //     exprenseData,
+          //     totalAmount: exprenseData.amount,
+          //   })
+          // );
+
+          InputDescriptionRef.current.value = "";
+          InputDateRef.current.value = "";
+          InputCategoryRef.current.value = "";
+          InputExpenseRef.current.value = "";
+        });
+    }
   };
   return (
     <div className="container">
@@ -64,7 +108,7 @@ const MyExpense = () => {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={MyExpenseHandler}>
+              <form onSubmit={MyExpenseSubmitHandler}>
                 <div className="modal-body">
                   <div className="form-group font-weight-bold">
                     <label htmlFor="date">Date</label>
@@ -110,9 +154,10 @@ const MyExpense = () => {
                       ref={InputCategoryRef}
                     >
                       <option selected>Category</option>
-                      <option defaultValue="1">Food</option>
-                      <option defaultValue="2">Salary</option>
-                      <option defaultValue="3">Petrol</option>
+                      <option value="Food">Food</option>
+                      <option value="Salary">Salary</option>
+                      <option value="Petrol">Petrol</option>
+                      <option value="others">Others</option>
                     </select>
                   </div>
                 </div>
@@ -132,38 +177,7 @@ const MyExpense = () => {
             </div>
           </div>
         </div>
-        <div className="table-responsive ">
-          <table
-            className="table table-striped table-bordered table-hover Expensetable table-lg mt-5"
-            id="expenseTable"
-          >
-            <thead className="table-dark">
-              <tr>
-                <th>Expense Description </th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expense.map((Expense) => {
-                return (
-                  <tr key={Expense.id}>
-                    <td>{Expense.description}</td>
-                    <td>{Expense.category}</td>
-                    <td>{Expense.amount}</td>
-                    <td>{Expense.date}</td>
-                    <td>
-                      <a className="btn btn-primary text-white">Edit</a>
-                      <a className="btn btn-primary text-white ml-3">Delete</a>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <TableExpense />
       </div>
     </div>
   );

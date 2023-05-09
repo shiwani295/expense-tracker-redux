@@ -1,6 +1,6 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import MyExpenseSliceReducer from "./MyExpenseSlice";
 import themeSliceReducer from "./themeSlice";
+import MyExpenseSliceReducer from "./MyExpenseSlice";
 
 const initialToken = localStorage.getItem("token");
 
