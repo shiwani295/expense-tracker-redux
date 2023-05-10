@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "../Pages/MyExpense.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MyExpenseAction } from "../../Store/MyExpenseSlice";
 import TableExpense from "./TableExpense";
 
@@ -10,12 +10,8 @@ const MyExpense = () => {
   const InputExpenseRef = useRef();
   const InputCategoryRef = useRef();
   const dispatch = useDispatch();
-  const expenses = useSelector((state) => state.expense.expense);
-  const totalAmount = useSelector((state) => state.expense.totalAmount);
-
-  console.log(totalAmount);
-
-  console.log(expenses);
+  const emailID = localStorage.getItem("email");
+  const replaceEmailid = emailID.replace("@", "").replace(".", "");
 
   const MyExpenseSubmitHandler = (event) => {
     event.preventDefault();
@@ -37,7 +33,7 @@ const MyExpense = () => {
       window.confirm("please provide each input feild value ");
     } else {
       fetch(
-        "https://expensetrackernew-86302-default-rtdb.firebaseio.com/expense.json",
+        `https://expensetrackernew-86302-default-rtdb.firebaseio.com/expense/${replaceEmailid}.json`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -51,13 +47,6 @@ const MyExpense = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          // dispatch(
-          //   MyExpenseAction.addExpense({
-          //     exprenseData,
-          //     totalAmount: exprenseData.amount,
-          //   })
-          // );
-
           InputDescriptionRef.current.value = "";
           InputDateRef.current.value = "";
           InputCategoryRef.current.value = "";
@@ -65,6 +54,7 @@ const MyExpense = () => {
         });
     }
   };
+
   return (
     <div className="container">
       <div className="row mt-4">
