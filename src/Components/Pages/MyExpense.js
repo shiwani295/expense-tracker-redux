@@ -3,10 +3,11 @@ import "../Pages/MyExpense.css";
 import { useDispatch, useSelector } from "react-redux";
 import { MyExpenseAction } from "../../Store/MyExpenseSlice";
 import { getExpenseAction } from "../../Store/MyExpenseSlice";
+import AsycCSV from "../CSV/AsycCSV";
+
 const MyExpense1 = () => {
   const InputDescriptionRef = useRef();
   const InputDateRef = useRef();
-  console.log(InputDateRef);
   const InputExpenseRef = useRef();
   const InputCategoryRef = useRef();
   const [expense, setExpense] = useState([]);
@@ -100,7 +101,6 @@ const MyExpense1 = () => {
   const DeleteExpenseHandler = async (id) => {
     try {
       if (window.confirm("Are you sure you want to delete this expense?")) {
-        console.log(id);
         await fetch(
           `https://expensetrackernew-86302-default-rtdb.firebaseio.com/expense/${replaceEmailid}/${id}.json/`,
           {
@@ -168,6 +168,7 @@ const MyExpense1 = () => {
             </div>
           </div>
         </div>
+
         {/* model */}
         <div
           className="modal fade"
@@ -268,9 +269,11 @@ const MyExpense1 = () => {
             </div>
           </div>
         </div>
+        {/* table */}
         <div className="table-responsive ">
+          <AsycCSV />
           <table
-            className="table table-striped table-bordered table-hover Expensetable table-lg mt-5"
+            className="table table-striped table-bordered table-hover Expensetable table-lg mt-3"
             id="expenseTable"
           >
             <thead className="table-dark">
