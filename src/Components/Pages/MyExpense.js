@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../Pages/MyExpense.css";
 import { useDispatch, useSelector } from "react-redux";
-import { MyExpenseAction } from "../../Store/MyExpenseSlice";
+import { MyExpenseAction, PrimiumAction } from "../../Store/MyExpenseSlice";
 import { getExpenseAction } from "../../Store/MyExpenseSlice";
 import AsycCSV from "../CSV/AsycCSV";
+import { toggelthemeAction } from "../../Store/themeSlice";
 
 const MyExpense = () => {
   const InputDescriptionRef = useRef();
@@ -13,9 +14,12 @@ const MyExpense = () => {
   const [expense, setExpense] = useState([]);
   const dispatch = useDispatch();
   const totalAmount = useSelector((state) => state.expense.totalAmount);
+  const askPremium = useSelector((state) => state.expense.Premium);
+  dispatch(PrimiumAction.askPremium(totalAmount));
   const emailID = localStorage.getItem("email");
   const replaceEmailid = emailID.replace("@", "").replace(".", "");
   //form submit handler
+
   const MyExpenseSubmitHandler = (event) => {
     event.preventDefault();
     const exprenseData = {
@@ -48,14 +52,15 @@ const MyExpense = () => {
         }
       )
         .then((res) => {
-          window.location.reload();
+          return res.json();
+          // window.location.reload();
         })
         .then((data) => {
           console.log(data);
-          InputDescriptionRef.current.value = "";
-          InputDateRef.current.value = "";
-          InputCategoryRef.current.value = "";
-          InputExpenseRef.current.value = "";
+          // InputDescriptionRef.current.value = "";
+          // InputDateRef.current.value = "";
+          // InputCategoryRef.current.value = "";
+          // InputExpenseRef.current.value = "";
         });
     }
   };
@@ -152,6 +157,8 @@ const MyExpense = () => {
     }
   };
 
+  //"ask primimum"
+
   return (
     <div className="container">
       <div className="row mt-4">
@@ -168,6 +175,21 @@ const MyExpense = () => {
             </div>
           </div>
         </div>
+        {/* primimum */}
+        {askPremium && (
+          <div className="col-md-4 ">
+            <div className="card ">
+              <div className="card-body bg-primary border border-primary rounded cardExpenseBtn">
+                <button
+                  className=" btn bg-white border border-primary font-weight-bold"
+                  onClick={() => dispatch(toggelthemeAction.toggeltheme())}
+                >
+                  Action Premium
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* model */}
         <div
