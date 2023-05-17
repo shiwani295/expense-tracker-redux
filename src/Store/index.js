@@ -1,34 +1,14 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import themeSliceReducer from "./themeSlice";
 import MyExpenseSliceReducer from "./MyExpenseSlice";
+import AuthSliceReducer from "./AuthSlice";
 
-const initialToken = localStorage.getItem("token");
-
-const AuthSlice = createSlice({
-  name: "auth",
-  initialState: {
-    isAuthenticated: initialToken ? true : false,
-  },
-  reducers: {
-    login(state) {
-      state.isAuthenticated = true;
-    },
-    logout(state) {
-      state.isAuthenticated = false;
-      localStorage.removeItem("token");
-    },
-  },
-});
-
-//store
 const store = configureStore({
   reducer: {
-    auth: AuthSlice.reducer,
+    auth: AuthSliceReducer,
     expense: MyExpenseSliceReducer,
     theme: themeSliceReducer,
   },
 });
-//action
-export const authAction = AuthSlice.actions;
 
 export default store;

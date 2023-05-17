@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "../NavBar/Header.css";
-import { authAction } from "../../Store/index";
 import { toggelthemeAction } from "../../Store/themeSlice";
+import { authAction } from "../../Store/AuthSlice";
 
 const Header = () => {
   const isauth = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isauth);
   const authEmail = localStorage.getItem("email");
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import "../Asset/CSS/signUp.css";
 import { useDispatch } from "react-redux";
-import { authAction } from "../Store";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { authAction } from "../Store/AuthSlice";
 
 const SignUp = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -58,6 +58,7 @@ const SignUp = () => {
         .then((data) => {
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("email", data.email);
+
           dispatch(authAction.login());
           history("/welcome");
         })
@@ -175,14 +176,17 @@ const SignUp = () => {
                         <div>
                           Don't have an account ?{" "}
                           <span onClick={() => setIsLogin(false)}>
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <i
+                              className="fa fa-user-plus"
+                              aria-hidden="true"
+                            ></i>
                           </span>
                         </div>
                       ) : (
                         <div>
-                          Don't have an account ?{" "}
+                          have an account ?{" "}
                           <span onClick={() => setIsLogin(true)}>
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            <i className="fa fa-sign-in" aria-hidden="true"></i>
                           </span>
                         </div>
                       )}

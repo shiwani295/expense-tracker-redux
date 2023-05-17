@@ -5,7 +5,7 @@ import { MyExpenseAction } from "../../Store/MyExpenseSlice";
 import { getExpenseAction } from "../../Store/MyExpenseSlice";
 import AsycCSV from "../CSV/AsycCSV";
 
-const MyExpense1 = () => {
+const MyExpense = () => {
   const InputDescriptionRef = useRef();
   const InputDateRef = useRef();
   const InputExpenseRef = useRef();
@@ -308,13 +308,13 @@ const MyExpense1 = () => {
                         data-target="#exampleModalCenter"
                         onClick={() => EditExpenseHandler(Expense)}
                       >
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <i className="fa fa-pencil" aria-hidden="true"></i>
                       </button>
                       <button
                         className=" btn bg-white border border-primary font-weight-bold ml-2"
                         onClick={() => DeleteExpenseHandler(Expense.id)}
                       >
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </td>
                   </tr>
@@ -332,4 +332,4 @@ const MyExpense1 = () => {
   );
 };
 
-export default MyExpense1;
+export default MyExpense;

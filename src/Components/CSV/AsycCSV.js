@@ -9,13 +9,15 @@ const header = [
   { label: "Date", key: "date" },
   { label: "Description", key: "description" },
 ];
-//make sure the data come with this formate [{},{},{}]
 
 const AsycCSV = () => {
   const data = useSelector((state) => state.expense.expense);
-  const exp = data.map((items) => items.exprenseData);
+  const ExpenseData = data.map((item) => item.exprenseData);
+  // console.log(ExpenseData);
+
+  //make sure the data come with this formate [{},{},{}]
   const csvReport = {
-    data: exp,
+    data: ExpenseData,
     headers: header,
     filename: "Expense_Report.csv",
   };
