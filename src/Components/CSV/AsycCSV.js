@@ -12,8 +12,11 @@ const header = [
 
 const AsycCSV = () => {
   const data = useSelector((state) => state.expense.expense);
-  const ExpenseData = data.map((item) => item.exprenseData);
-  // console.log(ExpenseData);
+  console.log(data);
+  const ExpenseData = data && data.map((item) => item.exprenseData);
+  // data.map((item) => {
+  console.log(ExpenseData);
+  // });
 
   //make sure the data come with this formate [{},{},{}]
   const csvReport = {

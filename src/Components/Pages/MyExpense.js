@@ -18,6 +18,9 @@ const MyExpense = () => {
   dispatch(PrimiumAction.askPremium(totalAmount));
   const emailID = localStorage.getItem("email");
   const replaceEmailid = emailID.replace("@", "").replace(".", "");
+
+  const exp = useSelector((state) => state.expense.expense);
+  const getdataAgain = useSelector((state) => state.expense.getdataAgain);
   //form submit handler
 
   const MyExpenseSubmitHandler = (event) => {
@@ -30,7 +33,12 @@ const MyExpense = () => {
       id: Math.random().toString(),
     };
     console.log(exprenseData);
-    dispatch(MyExpenseAction.addExpense(exprenseData));
+    dispatch(
+      MyExpenseAction.addExpense([
+        ...exp,
+        { exprenseData: exprenseData, id: Math.random().toString() },
+      ])
+    );
     if (
       !exprenseData.description ||
       !exprenseData.date ||
@@ -52,15 +60,16 @@ const MyExpense = () => {
         }
       )
         .then((res) => {
-          return res.json();
+          dispatch(MyExpenseAction.getdataAgain());
+          // return res.json();
           // window.location.reload();
         })
         .then((data) => {
           console.log(data);
-          // InputDescriptionRef.current.value = "";
-          // InputDateRef.current.value = "";
-          // InputCategoryRef.current.value = "";
-          // InputExpenseRef.current.value = "";
+          InputDescriptionRef.current.value = "";
+          InputDateRef.current.value = "";
+          InputCategoryRef.current.value = "";
+          InputExpenseRef.current.value = "";
         });
     }
   };
@@ -100,7 +109,7 @@ const MyExpense = () => {
       }
     };
     getData();
-  }, [dispatch, replaceEmailid]);
+  }, [dispatch, replaceEmailid, getdataAgain]);
 
   //delete data from table
   const DeleteExpenseHandler = async (id) => {
@@ -116,8 +125,9 @@ const MyExpense = () => {
           }
         ).then((res) => {
           if (res.ok) {
-            window.location.reload();
-            console.log("deleted");
+            dispatch(MyExpenseAction.getdataAgain());
+            // window.location.reload();
+            // console.log("deleted");
           } else {
             console.log("error");
           }
@@ -344,7 +354,7 @@ const MyExpense = () => {
               })}
               <tr>
                 <th colSpan="4">Subtotal</th>
-                <th>{totalAmount}</th>
+                <th>₹ {totalAmount}</th>
               </tr>
             </tbody>
           </table>
