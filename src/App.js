@@ -34,7 +34,7 @@ function App() {
           )}
           <Route path="*" element="/"></Route>
         </Routes>
-        {/* this is for testing  */}
+        {/* gor testing */}
         <Greeting />
       </div>
     </>
