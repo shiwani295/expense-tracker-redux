@@ -9,13 +9,10 @@ import Welcome from "./Components/Pages/Welcome";
 import MyExpense from "./Components/Pages/MyExpense";
 import "../src/Components/NavBar/Header.css";
 import "./App.css";
-
-// import { useEffect } from "react";
-
+import Greeting from "./Components/Testing/Greeting";
 function App() {
   const isauth = useSelector((state) => state.auth.isAuthenticated);
   const theme = useSelector((state) => state.theme.isDarkMode);
-  // console.log(isauth);
   return (
     <>
       <div className={theme ? "darkMode-theme-premium" : "App"}>
@@ -37,6 +34,8 @@ function App() {
           )}
           <Route path="*" element="/"></Route>
         </Routes>
+        {/* this is for testing  */}
+        <Greeting />
       </div>
     </>
   );
