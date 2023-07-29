@@ -26,8 +26,6 @@ const AsycCSV = () => {
   };
   return (
     <div>
-      {/* type="button"
-        className="btn btn-outline-primary btn-sm buttonCSV mt-4 ml-3" */}
       <button className="btn btn-outline border bg-white border-primary btn-sm buttonCSV mt-4 ml-3 ">
         <CSVLink {...csvReport} style={{ textDecoration: "none" }}>
           <i class="fa fa-download" aria-hidden="true"></i> Download CSV

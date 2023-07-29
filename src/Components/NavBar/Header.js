@@ -7,7 +7,6 @@ import { authAction } from "../../Store/AuthSlice";
 
 const Header = () => {
   const isauth = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isauth);
   const authEmail = localStorage.getItem("email");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -92,9 +91,6 @@ const Header = () => {
         </div>
       )}
       <div>
-        {/* <button onClick={() => dispatch(toggelthemeAction.toggeltheme())}>
-          Change Mode
-        </button> */}
         <label class="switch">
           <input
             type="checkbox"

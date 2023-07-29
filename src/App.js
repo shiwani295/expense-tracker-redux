@@ -9,7 +9,6 @@ import Welcome from "./Components/Pages/Welcome";
 import MyExpense from "./Components/Pages/MyExpense";
 import "../src/Components/NavBar/Header.css";
 import "./App.css";
-import Greeting from "./Components/Testing/Greeting";
 function App() {
   const isauth = useSelector((state) => state.auth.isAuthenticated);
   const theme = useSelector((state) => state.theme.isDarkMode);
@@ -34,8 +33,6 @@ function App() {
           )}
           <Route path="*" element="/"></Route>
         </Routes>
-        {/* gor testing */}
-        <Greeting />
       </div>
     </>
   );

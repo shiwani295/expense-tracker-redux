@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getExpenseAction } from "../../Store/MyExpenseSlice";
-
+import { CSVLink } from "react-csv";
 const TableExpense = () => {
   const [expense, setExpense] = useState([]);
+  console.log(expense);
   const dispatch = useDispatch();
   const totalAmount = useSelector((state) => state.expense.totalAmount);
   const emailID = localStorage.getItem("email");
   const replaceEmailid = emailID.replace("@", "").replace(".", "");
-
-  // const expenses = useSelector((state) => state.expense.expense);
-  // console.log(expenses);
-
-  //get data and show in database
+  //get data and show in tableExpense table
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
@@ -26,14 +23,16 @@ const TableExpense = () => {
         }
       );
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
         let updatedtotalAmount = 0;
         const newdata = [];
         for (let key in data) {
           newdata.push({ id: key, ...data[key] });
           updatedtotalAmount =
-            updatedtotalAmount + Number(data[key].expense.amount);
+            updatedtotalAmount + Number(data[key].exprenseData.amount);
         }
+        console.log(newdata);
         dispatch(
           getExpenseAction.getExpense({
             expense: newdata,
@@ -46,7 +45,7 @@ const TableExpense = () => {
       }
     };
     getData();
-  }, [dispatch]);
+  }, [dispatch, replaceEmailid]);
 
   //Edit data (table data)
   const EditExpenseHandler = (id) => {
@@ -87,16 +86,19 @@ const TableExpense = () => {
       console.log(error.message);
     }
   };
-
   return (
     <div className="table-responsive ">
-      <button className="mt-5 btn-sm btn-success border ">
-        <i className="fa fa-download ml-2 mr-2" aria-hidden="true"></i>Download
-        CSV
-      </button>
+      {/* {expense.map((data) => ( */}
+      <CSVLink data={expense} filename="expense-table-data.csv" target="_blank">
+        <button className="mt-5 btn-sm btn-success border ">
+          <i className="fa fa-download ml-2 mr-2" aria-hidden="true"></i>
+          Download CSV
+        </button>
+      </CSVLink>
+      {/* // ))} */}
       <table
         className="table table-striped table-bordered table-hover Expensetable table-lg mt-2"
-        id="expenseTable"
+        id="example"
       >
         <thead className="table-dark">
           <tr>
@@ -110,10 +112,10 @@ const TableExpense = () => {
         <tbody>
           {expense.map((item) => (
             <tr key={item.id} className="tablebody" id="tabletr">
-              <td>{item.expense.description}</td>
-              <td>{item.expense.category}</td>
-              <td>{item.expense.amount}</td>
-              <td>{item.expense.date}</td>
+              <td>{item.exprenseData.description}</td>
+              <td>{item.exprenseData.category}</td>
+              <td>{item.exprenseData.amount}</td>
+              <td>{item.exprenseData.date}</td>
 
               <td>
                 <Link
@@ -152,3 +154,5 @@ const TableExpense = () => {
 };
 
 export default TableExpense;
+
+//not working
